@@ -50,6 +50,7 @@ def perform_ocr(image_path, user_input_format):
 
     return remove_noise_img, boxes, text
 
+
 def extract_text_from_pdf(pdf_path, num_pages=None):
     text = ""
     pdf_document = fitz.open(pdf_path)
