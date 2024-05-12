@@ -87,3 +87,4 @@ watchdog==4.0.0
 wcwidth==0.2.13
 widgetsnbextension==4.0.10
 zipp==3.18.1
+Pillow==9.0.0
