@@ -6,6 +6,8 @@ import tempfile
 import docx
 import cv2
 
+pytesseract.pytesseract.tesseract_cmd = "/usr/local/bin/tesseract"
+
 def perform_ocr(image_path, user_input_format):
     orig = cv2.imread(image_path)
     image = cv2.cvtColor(orig, cv2.COLOR_BGR2RGB)
