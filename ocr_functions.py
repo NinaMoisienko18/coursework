@@ -1,10 +1,10 @@
-import cv2
 import pytesseract
 import numpy as np
 import fitz
 import streamlit as st
 import tempfile
 import docx
+import cv2
 
 def perform_ocr(image_path, user_input_format):
     orig = cv2.imread(image_path)
