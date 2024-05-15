@@ -1,27 +1,26 @@
 FROM python:3.11
 
-# Встановлюємо необхідні бібліотеки для роботи з OpenCV
-RUN apt-get update && apt-get install -y \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Встановлюємо Tesseract
-RUN apt-get install -y tesseract-ocr
+RUN apt-get update \
+    && apt-get -y install tesseract-ocr \
+    && apt-get install -y python3 python3-distutils python3-pip \
+    && cd /usr/local/bin \
+    && if [ ! -e python ]; then ln -s /usr/bin/python3 python; fi \
+    && pip3 --no-cache-dir install --upgrade pip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Створюємо та переходимо в робочу директорію
+RUN apt update \
+  && apt-get install ffmpeg libsm6 libxext6 -y
+RUN pip3 install pytesseract
+RUN pip3 install opencv-python
+RUN pip3 install pillow
+
+COPY . /app
 WORKDIR /app
 
-# Копіюємо файли вашого додатку в контейнер
-COPY . /app
-
-# Встановлюємо необхідні Python залежності
 RUN pip install -r requirements.txt
 
-# Встановлюємо шлях до виконуваного файлу Tesseract
-ENV TESSERACT_CMD=/usr/bin/tesseract
+ENTRYPOINT ["python3"]
+CMD ["streamlit_app.py"]
 
-# Запускаємо ваш додаток при старті контейнера
-CMD ["python", "streamlit_app.py"]
