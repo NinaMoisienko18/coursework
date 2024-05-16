@@ -29,11 +29,11 @@ def perform_ocr(image_path, user_input_format):
 
     if user_input_format == "Чек":
         config = r'--psm 4 --oem 3 -c preserve_interword_spaces=1'
+    elif user_input_format == "Зображення з простим текстом (без таблиць тощо)":
+        config = r'--psm 3 --oem 1 -c preserve_interword_spaces=1'
     elif user_input_format == "PDF-документ":
         text = extract_text_from_pdf(image_path)
         return None, None, text
-    elif user_input_format == "Зображення з простим текстом (без таблиць тощо)":
-        config = r'--psm 3 --oem 1 -c preserve_interword_spaces=1'
 
     image = cv2.normalize(image, np.zeros((image.shape[0], image.shape[1])), 0, 255, cv2.NORM_MINMAX)
 
@@ -51,7 +51,6 @@ def perform_ocr(image_path, user_input_format):
              for i in range(len(results['text'])) if results['text'][i].strip() != '']
 
     return remove_noise_img, boxes, text
-
 
 def extract_text_from_pdf(pdf_path, num_pages=None):
     text = ""
