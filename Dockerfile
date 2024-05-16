@@ -21,6 +21,6 @@ WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python3"]
-CMD ["streamlit_app.py"]
+CMD ["streamlit", "run", "streamlit_app.py"]
+
 
